@@ -270,7 +270,7 @@ export default function App() {
                 <span>{profile.heroLabel}</span>
               </div>
 
-              <h1 className="font-display text-3xl sm:text-4xl lg:text-[50px] font-bold tracking-tight text-[#1C1917] leading-[1.14]">
+              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#1C1917] leading-[1.22] sm:leading-[1.2] lg:leading-[1.18]">
                 I build useful digital products, from{' '}
                 <span className="text-teal-700">AI prototypes</span> to{' '}
                 <span className="text-emerald-700">production-ready</span> web apps.
