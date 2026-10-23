@@ -195,7 +195,7 @@ export const portfolioData = {
       period: '2020 – 2024',
       location: 'Mumbai University',
       bullets: [
-        'Graduated with 8.35 CGPA.',
+        'Graduated with 8.99 CGPA.',
         'Built projects in computer vision, NLP and data analytics.',
         'Published a research paper in IJRASET (2024).',
       ],

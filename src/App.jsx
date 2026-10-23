@@ -595,6 +595,20 @@ export default function App() {
                       </li>
                     ))}
                   </ul>
+
+                  {item.paperUrl && (
+                    <div className="mt-3.5 pt-3 border-t border-[#EFE9DC]">
+                      <a
+                        href={item.paperUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-900 transition-colors"
+                      >
+                        <span>{item.paperLabel}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
