@@ -197,8 +197,11 @@ export const portfolioData = {
       bullets: [
         'Graduated with 8.99 CGPA.',
         'Built projects in computer vision, NLP and data analytics.',
-        'Published a research paper in IJRASET (2024).',
+        'Published a research paper in IRJMETS (April 2024).',
       ],
+      paperUrl:
+        'https://www.irjmets.com/uploadedfiles/paper/issue_4_april_2024/54531/final/fin_irjmets1715526154.pdf',
+      paperLabel: 'View Published Research Paper (IRJMETS PDF)',
     },
   ],
 };
