@@ -16,6 +16,7 @@ import {
   Send,
   FolderGit2,
   X,
+  Menu,
 } from 'lucide-react';
 import { portfolioData } from './data/portfolioData';
 
@@ -151,6 +152,7 @@ export default function App() {
 
   const [selectedProject, setSelectedProject] = useState(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const visibleProjects = showAllProjects ? projects : projects.slice(0, 4);
   const [contactForm, setContactForm] = useState({
     name: '',
@@ -178,18 +180,20 @@ export default function App() {
       <div className="fixed top-[25%] left-[-10%] w-[460px] h-[460px] rounded-full bg-emerald-400/10 blur-[140px] pointer-events-none z-0" />
 
       {/* Top Navigation */}
-      <header className="sticky top-0 z-40 backdrop-blur-xl bg-[#FAF6EE]/90 border-b border-[#E5DEC9]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      <header className="sticky top-0 z-40 backdrop-blur-xl bg-[#FAF6EE]/95 border-b border-[#E5DEC9]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2">
           {/* Brand Logo */}
-          <a href="#about" className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-emerald-700 text-[#FAF6EE] flex items-center justify-center font-display font-bold text-sm shadow-sm">
+          <a href="#about" className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-700 text-[#FAF6EE] flex items-center justify-center font-display font-bold text-xs sm:text-sm shadow-sm shrink-0">
               OK
             </div>
-            <div>
-              <div className="font-display font-bold text-[#1C1917] text-base leading-tight">
+            <div className="min-w-0">
+              <div className="font-display font-bold text-[#1C1917] text-sm sm:text-base leading-tight truncate">
                 {profile.name}
               </div>
-              <div className="text-[11px] text-[#6B635B] mt-0.5">{profile.subtitle}</div>
+              <div className="text-[10px] sm:text-[11px] text-[#6B635B] mt-0.5 truncate">
+                {profile.subtitle}
+              </div>
             </div>
           </a>
 
@@ -212,29 +216,61 @@ export default function App() {
             </a>
           </nav>
 
-          {/* CTA Button */}
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-[#FAF6EE] font-semibold text-xs sm:text-sm transition-all shadow-sm"
-          >
-            <span>Let’s Talk</span>
-            <ArrowRight className="w-4 h-4" />
-          </a>
+          {/* CTA + Mobile Menu Toggle */}
+          <div className="flex items-center gap-2 shrink-0">
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-[#FAF6EE] font-semibold text-xs sm:text-sm transition-all shadow-sm"
+            >
+              <span>Let’s Talk</span>
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </a>
+
+            <button
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              className="md:hidden p-2 rounded-xl bg-[#FFFDF9] border border-[#E5DEC9] text-[#1C1917]"
+              aria-label="Toggle Menu"
+            >
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Dropdown Nav */}
+        {mobileMenuOpen && (
+          <nav className="md:hidden border-t border-[#E5DEC9] bg-[#FAF6EE] px-4 py-3 flex flex-col gap-2.5 text-sm font-medium text-[#44403C]">
+            {[
+              { label: 'About', href: '#about' },
+              { label: 'Skills', href: '#skills' },
+              { label: 'Projects', href: '#projects' },
+              { label: 'Experience', href: '#experience' },
+              { label: 'Contact', href: '#contact' },
+            ].map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-1.5 px-2 rounded-lg hover:bg-[#F3EDE2] hover:text-emerald-700 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        )}
       </header>
 
-      <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-24 space-y-24">
+      <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-20 sm:pb-24 space-y-16 sm:space-y-24">
         {/* HERO SECTION */}
-        <section id="about" className="space-y-12 scroll-mt-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <section id="about" className="space-y-8 sm:space-y-12 scroll-mt-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             {/* Left 7 Cols: Headline, Bio, CTAs */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-3 text-[11px] font-mono tracking-widest uppercase text-emerald-700 font-semibold">
-                <span className="w-6 h-[2px] bg-emerald-700" />
+            <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+              <div className="inline-flex items-center gap-2.5 text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-emerald-700 font-semibold">
+                <span className="w-5 sm:w-6 h-[2px] bg-emerald-700" />
                 <span>{profile.heroLabel}</span>
               </div>
 
-              <h1 className="font-display text-4xl sm:text-[50px] font-bold tracking-tight text-[#1C1917] leading-[1.12]">
+              <h1 className="font-display text-3xl sm:text-4xl lg:text-[50px] font-bold tracking-tight text-[#1C1917] leading-[1.14]">
                 I build useful digital products, from{' '}
                 <span className="text-teal-700">AI prototypes</span> to{' '}
                 <span className="text-emerald-700">production-ready</span> web apps.
@@ -245,20 +281,20 @@ export default function App() {
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap items-center gap-3.5 pt-1">
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-3 pt-1">
                 <a
                   href="#projects"
-                  className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-[#FAF6EE] font-semibold text-sm shadow-md shadow-emerald-900/10 transition-all"
+                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-[#FAF6EE] font-semibold text-xs sm:text-sm shadow-md shadow-emerald-900/10 transition-all"
                 >
-                  <FolderGit2 className="w-4 h-4" />
+                  <FolderGit2 className="w-4 h-4 shrink-0" />
                   <span>View Projects</span>
                 </a>
 
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-[#FFFDF9] hover:bg-[#F3EDE2] border border-[#DED6C6] text-[#1C1917] font-medium text-sm transition-all shadow-sm"
+                  className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3 rounded-xl bg-[#FFFDF9] hover:bg-[#F3EDE2] border border-[#DED6C6] text-[#1C1917] font-medium text-xs sm:text-sm transition-all shadow-sm"
                 >
-                  <Mail className="w-4 h-4 text-[#6B635B]" />
+                  <Mail className="w-4 h-4 text-[#6B635B] shrink-0" />
                   <span>Contact Me</span>
                 </a>
               </div>
@@ -267,13 +303,13 @@ export default function App() {
             {/* Right 5 Cols: Availability Card + Tech Stack Card */}
             <div className="lg:col-span-5 space-y-4">
               {/* Availability Status Card */}
-              <div className="p-6 rounded-2xl bg-[#FFFDF9] border border-[#E5DEC9] shadow-sm space-y-4">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2 text-sm font-semibold text-[#1C1917]">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse" />
+              <div className="p-5 sm:p-6 rounded-2xl bg-[#FFFDF9] border border-[#E5DEC9] shadow-sm space-y-3.5">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#1C1917]">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse shrink-0" />
                     <span>{profile.availabilityTitle}</span>
                   </div>
-                  <div className="px-3 py-1 rounded-lg bg-[#F5EFE4] border border-[#E5DEC9] flex items-center gap-1.5 text-xs text-[#44403C] shrink-0">
+                  <div className="px-2.5 py-1 rounded-lg bg-[#F5EFE4] border border-[#E5DEC9] flex items-center gap-1.5 text-[11px] sm:text-xs text-[#44403C] shrink-0">
                     <MapPin className="w-3.5 h-3.5 text-emerald-700" />
                     <span>{profile.location}</span>
                   </div>
@@ -285,7 +321,7 @@ export default function App() {
               </div>
 
               {/* Tech Stack Card */}
-              <div className="p-6 rounded-2xl bg-[#FFFDF9] border border-[#E5DEC9] shadow-sm space-y-3.5">
+              <div className="p-5 sm:p-6 rounded-2xl bg-[#FFFDF9] border border-[#E5DEC9] shadow-sm space-y-3.5">
                 <div className="text-xs font-mono uppercase tracking-wider text-[#78716C]">
                   Core Technologies
                 </div>
@@ -293,10 +329,10 @@ export default function App() {
                   {techBadges.map((badge) => (
                     <div
                       key={badge.name}
-                      className="px-3.5 py-2.5 rounded-xl bg-[#FAF6EE] border border-[#E5DEC9] flex items-center gap-2.5 text-xs font-medium text-[#292524] hover:border-emerald-600/40 transition-colors"
+                      className="px-3 py-2.5 rounded-xl bg-[#FAF6EE] border border-[#E5DEC9] flex items-center gap-2 text-xs font-medium text-[#292524] hover:border-emerald-600/40 transition-colors"
                     >
                       <TechBadgeIcon type={badge.icon} />
-                      <span>{badge.name}</span>
+                      <span className="truncate">{badge.name}</span>
                     </div>
                   ))}
                 </div>
@@ -305,7 +341,7 @@ export default function App() {
           </div>
 
           {/* 4-Column Unified Metrics Bar */}
-          <div className="rounded-2xl bg-[#FFFDF9] border border-[#E5DEC9] shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#E5DEC9]">
+          <div className="rounded-2xl bg-[#FFFDF9] border border-[#E5DEC9] shadow-sm grid grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 divide-x divide-[#E5DEC9]">
             {metrics.map((m) => {
               const Icon =
                 m.icon === 'briefcase'
@@ -316,13 +352,15 @@ export default function App() {
                   ? Code2
                   : Zap;
               return (
-                <div key={m.label} className="p-5 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-700/10 border border-emerald-700/20 flex items-center justify-center text-emerald-700 shrink-0">
-                    <Icon className="w-5 h-5" />
+                <div key={m.label} className="p-4 sm:p-5 flex items-center gap-3 sm:gap-4">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-700/10 border border-emerald-700/20 flex items-center justify-center text-emerald-700 shrink-0">
+                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
-                  <div>
-                    <div className="font-display text-lg font-bold text-[#1C1917]">{m.value}</div>
-                    <div className="text-xs text-[#6B635B]">{m.label}</div>
+                  <div className="min-w-0">
+                    <div className="font-display text-sm sm:text-lg font-bold text-[#1C1917] truncate">
+                      {m.value}
+                    </div>
+                    <div className="text-[11px] sm:text-xs text-[#6B635B] truncate">{m.label}</div>
                   </div>
                 </div>
               );
@@ -685,89 +723,104 @@ export default function App() {
         </section>
       </main>
 
-      {/* PROJECT DETAILS MODAL */}
+      {/* PROJECT DETAILS MODAL — Mobile-First Scrollable Sheet */}
       {selectedProject && (
         <div
-          className="fixed inset-0 z-50 bg-stone-900/50 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4"
           onClick={() => setSelectedProject(null)}
         >
           <div
-            className="max-w-2xl w-full rounded-2xl bg-[#FFFDF9] border border-[#DED6C6] p-6 sm:p-8 space-y-6 shadow-2xl"
+            className="max-w-2xl w-full max-h-[90vh] sm:max-h-[85vh] rounded-t-2xl sm:rounded-2xl bg-[#FFFDF9] border border-[#DED6C6] shadow-2xl flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <span className="text-xs font-mono text-emerald-700 font-semibold uppercase">
+            {/* Sticky Modal Header */}
+            <div className="px-5 py-4 sm:px-7 sm:py-5 border-b border-[#E5DEC9] bg-[#FFFDF9] flex items-start justify-between gap-3 shrink-0">
+              <div className="min-w-0">
+                <span className="text-[11px] font-mono text-emerald-700 font-semibold uppercase block">
                   Project Breakdown
                 </span>
-                <h3 className="font-display text-2xl font-bold text-[#1C1917] mt-1">
+                <h3 className="font-display text-lg sm:text-2xl font-bold text-[#1C1917] mt-0.5 leading-snug">
                   {selectedProject.title}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedProject(null)}
-                className="p-2 rounded-lg bg-[#F3EDE2] hover:bg-[#E5DEC9] text-[#44403C]"
+                className="p-2 rounded-lg bg-[#F3EDE2] hover:bg-[#E5DEC9] text-[#44403C] shrink-0"
+                aria-label="Close modal"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <p className="text-sm text-[#57534E] leading-relaxed">{selectedProject.description}</p>
+            {/* Scrollable Modal Body */}
+            <div className="p-5 sm:p-7 space-y-4 overflow-y-auto flex-1">
+              <p className="text-xs sm:text-sm text-[#57534E] leading-relaxed">
+                {selectedProject.description}
+              </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E5DEC9]">
-                <div className="text-xs font-mono text-emerald-700 font-semibold mb-1">
-                  FRONTEND & UX
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                <div className="p-3.5 sm:p-4 rounded-xl bg-[#FAF6EE] border border-[#E5DEC9]">
+                  <div className="text-[11px] font-mono text-emerald-700 font-semibold mb-1">
+                    FRONTEND & UX
+                  </div>
+                  <p className="text-xs text-[#292524] leading-relaxed">
+                    {selectedProject.architecture.frontend}
+                  </p>
                 </div>
-                <p className="text-xs text-[#292524] leading-relaxed">
-                  {selectedProject.architecture.frontend}
-                </p>
-              </div>
-              <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E5DEC9]">
-                <div className="text-xs font-mono text-teal-700 font-semibold mb-1">
-                  BACKEND & AI PIPELINE
+                <div className="p-3.5 sm:p-4 rounded-xl bg-[#FAF6EE] border border-[#E5DEC9]">
+                  <div className="text-[11px] font-mono text-teal-700 font-semibold mb-1">
+                    BACKEND & AI PIPELINE
+                  </div>
+                  <p className="text-xs text-[#292524] leading-relaxed">
+                    {selectedProject.architecture.backend}
+                  </p>
                 </div>
-                <p className="text-xs text-[#292524] leading-relaxed">
-                  {selectedProject.architecture.backend}
-                </p>
-              </div>
-              <div className="p-4 rounded-xl bg-[#FAF6EE] border border-[#E5DEC9]">
-                <div className="text-xs font-mono text-amber-800 font-semibold mb-1">
-                  STORAGE & INDEXING
+                <div className="p-3.5 sm:p-4 rounded-xl bg-[#FAF6EE] border border-[#E5DEC9]">
+                  <div className="text-[11px] font-mono text-amber-800 font-semibold mb-1">
+                    STORAGE & INDEXING
+                  </div>
+                  <p className="text-xs text-[#292524] leading-relaxed">
+                    {selectedProject.architecture.database}
+                  </p>
                 </div>
-                <p className="text-xs text-[#292524] leading-relaxed">
-                  {selectedProject.architecture.database}
-                </p>
-              </div>
-              <div className="p-4 rounded-xl bg-emerald-700/10 border border-emerald-700/25">
-                <div className="text-xs font-mono text-emerald-800 font-semibold mb-1">
-                  KEY HIGHLIGHT
+                <div className="p-3.5 sm:p-4 rounded-xl bg-emerald-700/10 border border-emerald-700/25">
+                  <div className="text-[11px] font-mono text-emerald-800 font-semibold mb-1">
+                    KEY HIGHLIGHT
+                  </div>
+                  <p className="text-xs text-[#1C1917] leading-relaxed">
+                    {selectedProject.architecture.challenge}
+                  </p>
                 </div>
-                <p className="text-xs text-[#1C1917] leading-relaxed">
-                  {selectedProject.architecture.challenge}
-                </p>
               </div>
-            </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#E5DEC9]">
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1.5 pt-1">
                 {selectedProject.stack.map((s) => (
                   <span
                     key={s}
-                    className="px-2.5 py-1 rounded bg-emerald-700/10 text-xs font-mono text-emerald-800 font-medium"
+                    className="px-2.5 py-1 rounded bg-emerald-700/10 text-[11px] font-mono text-emerald-800 font-medium"
                   >
                     {s}
                   </span>
                 ))}
               </div>
+            </div>
+
+            {/* Sticky Modal Footer */}
+            <div className="px-5 py-3.5 sm:px-7 sm:py-4 border-t border-[#E5DEC9] bg-[#FAF6EE] flex items-center justify-between gap-3 shrink-0">
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="px-4 py-2 rounded-xl bg-[#FFFDF9] border border-[#DED6C6] text-xs font-semibold text-[#44403C]"
+              >
+                Close
+              </button>
               <a
                 href={selectedProject.repoUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-700 text-[#FAF6EE] font-semibold text-xs"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-700 text-[#FAF6EE] font-semibold text-xs truncate"
               >
-                <span>Open {selectedProject.repoName}</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <span className="truncate">Open {selectedProject.repoName}</span>
+                <ArrowUpRight className="w-3.5 h-3.5 shrink-0" />
               </a>
             </div>
           </div>
